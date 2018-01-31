@@ -16,7 +16,11 @@ let obj_str = JSON.stringify(obj);
 
 let http = require("http");
 let url = require("url");
+function write(){
 
+console.log("write line");
+
+}
 function start(route){
 	function onRequest(request,response){
 	console.log("Request recieved");
