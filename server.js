@@ -19,7 +19,7 @@ let url = require("url");
 function write(){
 
 console.log("write line");
-
+console.log("write line from desktop");
 }
 function start(route){
 	function onRequest(request,response){
