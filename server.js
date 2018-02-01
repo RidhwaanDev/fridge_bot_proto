@@ -3,7 +3,7 @@
 'use strict'
 
 
-const port = 8008;
+const port = 8180;
 
 let obj = {
 
@@ -17,20 +17,32 @@ let obj_str = JSON.stringify(obj);
 let http = require("http");
 let url = require("url");
 
-function start(route){
+function start(router,handle){
 	function onRequest(request,response){
+
+	let postData = "";
+
 	console.log("Request recieved");
-	console.log(response.toString());
 
-	let pathname = url.parse(request.url).pathname;
+	let name = url.parse(request.url).pathname;
 
-	route(pathname);
+	request.setEncoding("utf8");
 
-	response.writeHead(200,{"Content-Type":"text/plain"});
-	response.write(obj_str);
-	response.end();
+	request.addListener("data", function(postDataChunk){
+		postData += postDataChunk;
+		console.log("DATA CHUNK" +  postDataChunk);
+	});
+
+	request.addListener("end",function(){
+		console.log("RESULTING DATA" +  "  " + postData);
+		router(name,handle,response,postData);
+	});	
+
+// 	response.writeHead(200,{"Content-Type":"text/plain"});
+// 	response.write(obj_str);
+// 	response.end();
+// 
 }
-
 
 http.createServer(onRequest).listen(port);
 
