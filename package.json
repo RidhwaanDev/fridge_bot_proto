@@ -1,0 +1,16 @@
+{
+  "name": "ridhwaan",
+  "version": "1.0.0",
+  "description": "fridge_app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "mongodb": "^3.0.3"
+  },
+  "author": "Ridhwaan",
+  "license": "ISC"
+}
