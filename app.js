@@ -4,15 +4,41 @@ const bodyparser= require('body-parser');
 const path = require('path');
 const mongodb = require('mongodb');
 const mongoman = require('./database/mongoman');
-
+const sms = require('./sms.js');
 let app = express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 
-app.get('/upload',function(err,res){
+
+//middle-ware functions
+
+let packageValidator = function(req,res,next){
+  let id = req.body.id;
+  let data = req.body.data;	
+	if(!id || !data){
+	//handle id being null
+         console.log("something wrong with req");	
+	}  
+   next();
+}
+app.get('/sendsms',function(req,res){
+ sms.sendmsg();
+});
+
+
+app.get('/getbots',function(req,res){
+
+mongoman.getBots(function(err,result){
+	res.send(result);
+});
+
+});
+//app.use(packageValidator);
+
+app.get('/upload',function(req,res){
 console.log('ploading recievied');
-// let id = res.body.id;
-// let data = res.body.data;
+// let id = req.body.id;
+// let data = req.body.data;
 // let temp = data.temp;
 // let date = data.log;
 
@@ -28,9 +54,6 @@ console.log('ploading recievied');
 mongoman.update(package);
 
 
-});
-mongoman.getBots(function(err,result){
-console.log(result);
 });
 
 app.listen(3000,function(){
