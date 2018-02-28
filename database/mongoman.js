@@ -8,7 +8,6 @@ const fridge_database = "fridge_db";
 
 exports.getBots = function getBots(callback){
 
-	
 	MongoClient.connect(url,function(err,client){
 	
 	if(err){
@@ -36,4 +35,51 @@ exports.getBots = function getBots(callback){
 	
 	});
 }
+
+exports.update = function update(package){
+	MongoClient.connect(url,function(err,client){
+	
+	if(err){
+	console.log(err);
+	} else {
+	
+	let db  = client.db(fridge_database);
+	db.collection('bots').insertOne(package,function(err,res){
+	
+		if(err){
+		console.log("error in uplading" +  err);
+		} else{
+		
+		console.log(res);
+		client.close();
+		
+		}
+	
+	});	
+	
+	}
+	
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

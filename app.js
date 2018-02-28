@@ -5,18 +5,37 @@ const path = require('path');
 const mongodb = require('mongodb');
 const mongoman = require('./database/mongoman');
 
-const dbUrl = 'mongodb://localhost:27017/fridge_db';
-
 let app = express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 
+app.get('/upload',function(err,res){
+console.log('ploading recievied');
+// let id = res.body.id;
+// let data = res.body.data;
+// let temp = data.temp;
+// let date = data.log;
 
-mongoman.getBots(function(err,result){
 
-	console.log(result);	
+ let package = {
+ id:'101001',
+ temp:32,
+ date:'1/10/10',
+ phone:'6095407816'
+
+ }
+
+mongoman.update(package);
+
 
 });
+
+
+// mongoman.getBots(function(err,result){
+// 
+// 
+// });
+
 
 app.listen(3000,function(){
 	console.log("Started server");
