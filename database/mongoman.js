@@ -37,49 +37,35 @@ exports.getBots = function getBots(callback){
 }
 
 exports.update = function update(package){
+	let packageid= package.id;
+
 	MongoClient.connect(url,function(err,client){
-	
+ 		
 	if(err){
 	console.log(err);
 	} else {
 	
 	let db  = client.db(fridge_database);
-	db.collection('bots').insertOne(package,function(err,res){
-	
-		if(err){
-		console.log("error in uplading" +  err);
-		} else{
+	//if already exists replace
+	console.log("id of package" + packageid);
+	db.collection('bots').updateOne(
+		{id:packageid},
+		{ $set: {temp:300} },	
+		{upsert:true, w:1},
+			function(result){
 		
-		console.log(res);
-		client.close();
+			console.log("result of update");
+			console.log(result);
+			client.close();
 		
+			}); 
 		}
 	
-	});	
-	
-	}
-	
-	});
+
+//   let finddoc = db.collection('bots').find({id:packageid}, function(err,item){
+//
+//	});
+});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

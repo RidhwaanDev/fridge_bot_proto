@@ -29,13 +29,9 @@ mongoman.update(package);
 
 
 });
-
-
-// mongoman.getBots(function(err,result){
-// 
-// 
-// });
-
+mongoman.getBots(function(err,result){
+console.log(result);
+});
 
 app.listen(3000,function(){
 	console.log("Started server");
