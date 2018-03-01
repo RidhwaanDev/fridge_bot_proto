@@ -10,9 +10,9 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 
 
-//middle-ware functions
 
-let packageValidator = function(req,res,next){
+// Make sure the query parameters exist
+let queryValidator= function(req,res,next){
   let id = req.body.id;
   let data = req.body.data;	
 	if(!id || !data){
@@ -21,7 +21,7 @@ let packageValidator = function(req,res,next){
 	}  
    next();
 }
-app.get('/sendsms',function(req,res){
+app.get('/send',function(req,res){
  sms.sendmsg();
 });
 
@@ -36,11 +36,11 @@ mongoman.getBots(function(err,result){
 //app.use(packageValidator);
 
 app.get('/upload',function(req,res){
-console.log('ploading recievied');
-// let id = req.body.id;
-// let data = req.body.data;
-// let temp = data.temp;
-// let date = data.log;
+let msg = req.query.fridgeid + "  " + req.query.temp;	
+let temp = req.query.temp;
+// check if temp falls under a certain temperature 
+res.send(msg);
+
 
 
  let package = {
@@ -51,7 +51,7 @@ console.log('ploading recievied');
 
  }
 
-mongoman.update(package);
+// mongoman.update(package);
 
 
 });
